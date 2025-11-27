@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎄 Christmas Crossword</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2.4em;
+            margin-bottom: 10px;
+            color: #ffd700;
+            text-shadow: 0 0 8px rgba(255,215,0,0.6);
+        }
+        .crossword-container {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 15px;
+            border-radius: 12px;
+            margin: 20px auto;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+        }
+        .crossword-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 45px);
+            gap: 2px;
+        }
+        .cell {
+            width: 45px;
+            height: 45px;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 20px;
+            color: #2c5364;
+            border: 1px solid #333;
+            text-transform: uppercase;
+        }
+        .cell.black {
+            background-color: #1a1a2e;
+        }
+        .clues {
+            max-width: 500px;
+            margin: 25px auto;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        .clues h2 {
+            color: #ff6b6b;
+            margin: 15px 0 10px;
+        }
+        .clue {
+            text-align: left;
+            margin: 6px 0;
+            padding-left: 10px;
+            font-size: 1.05em;
+        }
+        .number {
+            font-weight: bold;
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎄 Christmas Crossword Puzzle</h1>
+    <p>Fill in the 5 holiday-themed words!</p>
+
+    <div class="crossword-container">
+        <div class="crossword-grid" id="grid"></div>
+    </div>
+
+    <div class="clues">
+        <h2>Across:</h2>
+        <div class="clue"><span class="number">1.</span> White flakes from the sky (4)</div>
+        <div class="clue"><span class="number">3.</span> Decorated evergreen plant (4)</div>
+        <div class="clue"><span class="number">4.</span> Present given on Christmas (4)</div>
+
+        <h2>Down:</h2>
+        <div class="clue"><span class="number">1.</span> Jolly man in red (5)</div>
+        <div class="clue"><span class="number">2.</span> Shiny object on top of the tree (4)</div>
+    </div>
+
+    <script>
+        const size = 7;
+        const grid = Array(size).fill().map(() => Array(size).fill(null));
+
+        // Words with positions: [word, row, col, isHorizontal]
+        const words = [
+            { word: "SNOW",  row: 0, col: 0, horiz: true  },  // 1 Across
+            { word: "TREE",  row: 2, col: 0, horiz: true  },  // 3 Across
+            { word: "GIFT",  row: 4, col: 0, horiz: true  },  // 4 Across
+            { word: "SANTA", row: 0, col: 0, horiz: false },  // 1 Down
+            { word: "STAR",  row: 0, col: 3, horiz: false }   // 2 Down
+        ];
+
+        // Fill the grid
+        words.forEach(item => {
+            const { word, row, col, horiz } = item;
+            for (let i = 0; i < word.length; i++) {
+                if (horiz) {
+                    if (row < size && col + i < size) {
+                        grid[row][col + i] = word[i];
+                    }
+                } else {
+                    if (row + i < size && col < size) {
+                        grid[row + i][col] = word[i];
+                    }
+                }
+            }
+        });
+
+        // Render grid
+        const gridEl = document.getElementById('grid');
+        for (let r = 0; r < size; r++) {
+            for (let c = 0; c < size; c++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                if (grid[r][c] === null) {
+                    cell.classList.add('black');
+                } else {
+                    cell.textContent = grid[r][c];
+                }
+                gridEl.appendChild(cell);
+            }
+        }
+    </script>
+</body>
+</html>

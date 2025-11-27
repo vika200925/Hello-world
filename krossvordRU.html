@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новогодний кроссворд</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #1a2980, #26d0ce);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2.5em;
+            text-shadow: 0 0 10px rgba(255,255,255,0.7);
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+        .crossword-container {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .crossword-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 40px);
+            gap: 2px;
+            margin: 0 auto;
+        }
+        .cell {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 18px;
+            color: #222;
+            border: 1px solid #333;
+            text-transform: uppercase;
+        }
+        .cell.black {
+            background-color: #1a1a2e;
+        }
+        .clues {
+            max-width: 600px;
+            margin: 25px auto;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        .clues h2 {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+        .clue {
+            text-align: left;
+            margin: 6px 0;
+            padding-left: 15px;
+        }
+        .number {
+            font-weight: bold;
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎄 Новогодний кроссворд 🎅</h1>
+    <div class="subtitle">Впишите 10 новогодних слов!</div>
+
+    <div class="crossword-container">
+        <div class="crossword-grid" id="grid"></div>
+    </div>
+
+    <div class="clues">
+        <h2>По горизонтали:</h2>
+        <div class="clue"><span class="number">1.</span> Главный волшебник Нового года (9)</div>
+        <div class="clue"><span class="number">2.</span> Зимнее развлечение на льду (6)</div>
+        <div class="clue"><span class="number">3.</span> Украшения для ёлки (8)</div>
+        <div class="clue"><span class="number">4.</span> Белое покрывало на земле (4)</div>
+        <div class="clue"><span class="number">5.</span> То, что ждёт каждый под ёлкой (7)</div>
+
+        <h2>По вертикали:</h2>
+        <div class="clue"><span class="number">6.</span> Новогоднее дерево (4)</div>
+        <div class="clue"><span class="number">7.</span> Транспорт Деда Мороза (5)</div>
+        <div class="clue"><span class="number">8.</span> Его держит Дед Мороз (5)</div>
+        <div class="clue"><span class="number">9.</span> Сверкающая лента на ёлке (7)</div>
+        <div class="clue"><span class="number">10.</span> Огни на ёлке (9)</div>
+    </div>
+
+    <script>
+        // Размер сетки 10x10
+        const size = 10;
+        const grid = Array(size).fill().map(() => Array(size).fill(null));
+
+        // Слова с координатами (row, col, isHorizontal)
+        const words = [
+            // По горизонтали
+            { word: "ДЕДМОРОЗ",   row: 0, col: 0, horiz: true },   // 1
+            { word: "КОНЬКИ",     row: 2, col: 1, horiz: true },   // 2
+            { word: "ИГРУШКИ",    row: 4, col: 0, horiz: true },   // 3
+            { word: "СНЕГ",       row: 6, col: 3, horiz: true },   // 4
+            { word: "ПОДАРКИ",    row: 8, col: 1, horiz: true },   // 5
+
+            // По вертикали
+            { word: "ЁЛКА",       row: 0, col: 2, horiz: false },  // 6
+            { word: "САНКИ",      row: 0, col: 5, horiz: false },  // 7
+            { word: "ПОСОХ",      row: 0, col: 7, horiz: false },  // 8
+            { word: "МИШУРА",     row: 2, col: 9, horiz: false },  // 9
+            { word: "ГИРЛЯНДА",   row: 0, col: 4, horiz: false }   // 10
+        ];
+
+        // Заполнение сетки
+        words.forEach(item => {
+            const { word, row, col, horiz } = item;
+            for (let i = 0; i < word.length; i++) {
+                if (horiz) {
+                    if (row < size && col + i < size) {
+                        grid[row][col + i] = word[i];
+                    }
+                } else {
+                    if (row + i < size && col < size) {
+                        grid[row + i][col] = word[i];
+                    }
+                }
+            }
+        });
+
+        // Отрисовка сетки
+        const gridElement = document.getElementById('grid');
+        for (let r = 0; r < size; r++) {
+            for (let c = 0; c < size; c++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                if (grid[r][c] === null) {
+                    cell.classList.add('black');
+                } else {
+                    cell.textContent = grid[r][c];
+                }
+                gridElement.appendChild(cell);
+            }
+        }
+    </script>
+</body>
+</html>
