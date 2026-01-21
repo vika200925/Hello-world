@@ -1,6 +1,7 @@
+
 [ВебДизайн.pptx](https://github.com/user-attachments/files/23846999/default.pptx)
 @font-face {
-	font-family: “Pudelinka”;
+	font-family: "Pudelinka";
 	src: url(”Fonts/pudelinka.ttf” ) format('truetype’);
 	font-weight: normal;
 	font-style: normal;}
@@ -16,4 +17,4 @@ blockquote.q {
 	padding: 10px 10px 10px 10px;
 	font-family: sans serif;
     }
-p.quote { font-family: “Pudelinka”, cursive;}
+p.quote { font-family: "Pudelinka", cursive;}
